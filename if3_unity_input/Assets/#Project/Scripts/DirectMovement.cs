@@ -13,12 +13,16 @@ public class DirectMovement : MonoBehaviour
 
         Keyboard kb = Keyboard.current;
 
+        float direction = 0;
+
         if (kb.leftArrowKey.isPressed) {
-            transform.Translate(-transform.right * speed * Time.deltaTime);
+            direction += -1;
         }
         if (kb.rightArrowKey.isPressed) {
-            transform.Translate(transform.right * speed * Time.deltaTime);
+            direction += 1;
         }        
+
+        transform.Translate( direction * transform.right * speed * Time.deltaTime);
 
     }
 }

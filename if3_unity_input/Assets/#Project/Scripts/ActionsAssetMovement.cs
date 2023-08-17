@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputActionMovement : MonoBehaviour
+public class ActionsAssetMovement : MonoBehaviour
 {
 
-    public float speed = 4;
+    public InputActionAsset actions;
+    private InputAction move;
+    public float speed;
 
-    public InputAction move;
-    
     void OnEnable()
     {
-        move.Enable();
+        actions.FindActionMap("Player").Enable();
     }
 
     void OnDisable()
     {
-        move.Disable();
+        actions.FindActionMap("Player").Disable();
     }
 
-    void Start() {
-        move.performed += ctx => { OnMove(ctx); };
+    void Awake()
+    {
+        move = actions.FindActionMap("Player").FindAction("move");
     }
 
     void Update()
@@ -29,9 +30,4 @@ public class InputActionMovement : MonoBehaviour
         float moveAmount = move.ReadValue<float>();
         transform.Translate( moveAmount * transform.right * speed * Time.deltaTime);
     }
-
-    public void OnMove(InputAction.CallbackContext context) {
-        // Debug.Log("WE ARE MOVING!!");
-    }
-
 }
